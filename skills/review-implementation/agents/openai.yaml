@@ -1,4 +1,4 @@
 interface:
   display_name: "Review Implementation"
-  short_description: "Fix root causes, then simplify the whole design"
-  default_prompt: "Use $review-implementation to verify this implementation, fix root causes, and simplify the coherent end state."
+  short_description: "Fix root causes and simplify for real users"
+  default_prompt: "Use $review-implementation to verify the user experience and implementation, fix root causes, and simplify the coherent end state."

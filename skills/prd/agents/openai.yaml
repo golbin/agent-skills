@@ -1,4 +1,4 @@
 interface:
   display_name: "PRD"
-  short_description: "Lean PRDs for coherent, root-cause solutions"
-  default_prompt: "Use $prd to design the simplest coherent solution and an evolving implementation checklist."
+  short_description: "Lean PRDs for user-centered root-cause design"
+  default_prompt: "Use $prd to design the simplest user-centered solution and an evolving implementation checklist."

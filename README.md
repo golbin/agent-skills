@@ -12,10 +12,10 @@ multiple installable skills.
 
 ## Available Skills
 
-- `prd`: Create or update lean living PRDs through repeated drafting,
-  subtraction, and checklist refinement.
-- `review-implementation`: Verify purpose and correctness, then repeatedly
-  remove unnecessary scope, structure, defenses, and prose.
+- `prd`: Design the simplest coherent solution, then refine its living
+  implementation checklist as evidence changes.
+- `review-implementation`: Verify purpose and correctness, fix root causes,
+  isolate justified legacy compatibility, and simplify repeatedly.
 
 ## Templates
 
@@ -119,10 +119,11 @@ curl -fsSL https://raw.githubusercontent.com/playmoreai/agent-skills/main/instal
 Invoke skills in Codex by name, for example:
 
 ```text
-Use $prd to turn this goal into a concise living checklist.
-Use $review-implementation to verify this implementation, then simplify it without weakening its purpose.
+Use $prd to design the simplest coherent solution and an evolving implementation checklist.
+Use $review-implementation to verify this implementation, fix root causes, and simplify the coherent end state.
 ```
 
-The `prd` skill keeps purpose and an evolving implementation checklist in one
-concise living document. The `review-implementation` skill protects correctness
-first, then refines the result in focused simplification passes.
+The `prd` skill keeps purpose, target design, and an evolving implementation
+checklist in one concise living document. The `review-implementation` skill
+protects correctness, fixes foundations instead of patching symptoms, and then
+refines the result in focused simplification passes.

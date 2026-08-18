@@ -1,4 +1,4 @@
 interface:
   display_name: "PRD"
-  short_description: "Lean living PRDs built around checklists"
-  default_prompt: "Use $prd to turn this goal into a concise living checklist."
+  short_description: "Lean PRDs for coherent, root-cause solutions"
+  default_prompt: "Use $prd to design the simplest coherent solution and an evolving implementation checklist."

@@ -1,4 +1,4 @@
 interface:
   display_name: "PRD"
-  short_description: "Evidence-backed living PRDs for agent work"
-  default_prompt: "Use $prd to create an evidence-backed PRD for this feature."
+  short_description: "Lean living PRDs built around checklists"
+  default_prompt: "Use $prd to turn this goal into a concise living checklist."

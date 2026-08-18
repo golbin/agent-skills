@@ -12,10 +12,10 @@ multiple installable skills.
 
 ## Available Skills
 
-- `prd`: Create or update evidence-backed living PRDs and phase execution files
-  under `tasks/`.
-- `review-implementation`: Review code against markdown requirements/spec docs,
-  identify gaps and risks, and apply focused fixes.
+- `prd`: Create or update lean living PRDs through repeated drafting,
+  subtraction, and checklist refinement.
+- `review-implementation`: Verify purpose and correctness, then repeatedly
+  remove unnecessary scope, structure, defenses, and prose.
 
 ## Templates
 
@@ -119,11 +119,10 @@ curl -fsSL https://raw.githubusercontent.com/playmoreai/agent-skills/main/instal
 Invoke skills in Codex by name, for example:
 
 ```text
-Use $prd to create an evidence-backed PRD for this feature.
-Use $review-implementation to review this implementation against tasks/prd-example.md.
+Use $prd to turn this goal into a concise living checklist.
+Use $review-implementation to verify this implementation, then simplify it without weakening its purpose.
 ```
 
-The `prd` skill creates or updates markdown PRD files under `tasks/`, including
-phase files when the plan is large enough to split. The `review-implementation`
-skill reviews code against markdown requirements/spec docs and applies focused
-fixes.
+The `prd` skill keeps purpose and an evolving implementation checklist in one
+concise living document. The `review-implementation` skill protects correctness
+first, then refines the result in focused simplification passes.

@@ -1,48 +1,59 @@
 ---
 name: prd
-description: Create or update a lean, user-centered living Product Requirements Document through repeated drafting and subtraction. Use when defining a feature or interface, planning root-cause or architectural work, revising implementation as discoveries emerge, handling legacy migration, or removing speculative scope and unnecessary design detail.
+description: Create or revise a concise product requirements document and living implementation checklist when planning a feature or updating its scope.
 ---
 
 # PRD
 
-Create a concise living document that keeps implementation aligned with its purpose. Do not implement unless the user asks.
+Keep the user's outcome, the target design, and the remaining work in one concise
+document grounded in the project. A planning-only request ends with the document;
+when implementation is already requested, use the plan to continue that work.
 
-## Philosophy
+## Establish the target
 
-Follow the Unix and X11 philosophies:
+Inspect the interfaces, callers, code, or product evidence needed to understand
+the requested change. Record the current problem, who encounters it, and the
+observable result that would resolve it. Ask about a missing decision only when
+it materially changes scope or correctness; record reasonable assumptions for
+details that can be decided within the request.
 
-- Define one clear purpose and the simplest coherent end state that fully achieves it, not the smallest diff or least-effort transition.
-- Start from the user's task and desired outcome. Treat UI, APIs, functions, CLIs, and operational surfaces alike as user experiences; optimize for predictability and low cognitive cost.
-- Prefer small, composable mechanisms and explicit interfaces; confine policy and side effects to boundaries.
-- Replace a wrong foundation when the purpose requires it; effort alone is not a reason to preserve it.
-- Do not plan for an imagined future. Avoid speculative scope, compatibility, policy, abstraction, and detail.
-- Describe defensive behavior, fallback, retry, or recovery only when a real boundary, requirement, or failure cost justifies it. Allow internal invariant violations to fail visibly, and make boundary failures actionable to their users.
-- Preserve legacy behavior only for known users, data, or contracts. Keep compatibility outside the target design in a removable adapter or migration, and define when it ends.
-- Treat easy deletion as a design goal. Keep features and modules loosely coupled enough to remove independently.
-- Use direct language. State each fact and decision once; remove boilerplate, repetition, and decorative prose.
+Choose the simplest coherent end state that fully achieves the purpose. Fix a
+wrong foundation when evidence requires it. Preserve the Unix/X11 preference for
+small, composable mechanisms, explicit interfaces, and policy at boundaries.
+Treat APIs, CLIs, functions, and operational tools as user experiences too.
 
-The PRD is a working aid, not a contract or ceremony. Its value is the clarity of the decisions and checklist, not its length.
+Include compatibility, retries, recovery, and migration only for known users,
+data, contracts, or failure costs. Keep necessary transition mechanisms removable
+and give them a retirement condition. Avoid speculative features and abstractions.
 
-## Draft in Passes
+## Write the working document
 
-Do not try to finish the PRD in one pass:
+Follow the user's location or the project's existing convention; otherwise use
+`tasks/prd-<feature>.md`. Reuse an existing PRD instead of creating a competing plan.
 
-1. **Intent:** identify the user, their task and friction, the desired outcome, goals, non-goals, and user-observable success conditions.
-2. **Execution:** identify the root cause and target design, then add only material constraints and a concrete, verifiable, dependency-ordered implementation and validation checklist. Include compatibility and migration only when evidence requires them.
-3. **Subtraction:** remove imagined future needs, unjustified defenses, premature architecture, optional scope, local workarounds, permanent transition layers, and details that do not change implementation.
-4. **Clarity:** remove repetition, boilerplate, vague wording, and decorative prose. Keep one clear source for each idea.
+Capture what the executor needs to decide, implement, and verify:
 
-Inspect relevant existing interfaces, callers, workflows, code, and documents before committing to a design. Repeat the passes until every remaining line helps decide, implement, or verify the work.
+- The problem, intended outcome, scope, and observable success conditions.
+- Evidence that shapes the target design, material constraints, and open decisions.
+- A dependency-aware checklist of concrete implementation and validation outcomes.
+- Current status and consequential changes to the design or scope.
 
-## Living Checklist
+Scale the structure to the task. Use one file for a compact plan. Split out context
+or phase files only when independent work or detailed evidence makes them useful;
+link the files from the main PRD. Do not invent phases or sections to fill a template.
 
-- Make every item small enough to complete and verify clearly.
-- Include validation of the actual user workflow and interface contracts in the same checklist as implementation.
-- Use phases only when they make dependencies or progress clearer.
-- Check off completed work as evidence appears.
-- During implementation, repeatedly add, remove, split, merge, or reorder items as discoveries change the simplest sufficient path.
-- When discoveries invalidate the design, rewrite the target and checklist instead of appending compensating tasks around a flawed plan.
-- Keep the PRD as the single current plan; update it instead of preserving an obsolete plan beside the real work.
-- Preserve the purpose and meaningful decisions when the checklist changes. Record only consequential changes.
+Validation items should name the behavior or contract to prove and the appropriate
+available check. Do not require every test category or repeat successful checks
+without a new change, failure, or unresolved risk.
 
-Finish when the success conditions are proven and no unnecessary scope remains. Prefer one concise Markdown file unless the user or project requires another structure.
+## Keep it useful during execution
+
+Preserve meaningful user edits and completed work. Check items off only when
+supported by implementation or validation evidence, and distinguish pending
+verification from completion. Revise affected items as discoveries change the
+target; retain important requirements or explicitly record their deferral.
+
+Review the draft for unsupported assumptions, unnecessary scope, and repetition.
+Revise where that review finds a concrete problem. The document is ready when
+another contributor can execute it and assess success without guessing material
+decisions. Report the saved path and any decisions that still need the user.

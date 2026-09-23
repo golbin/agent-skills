@@ -1,59 +1,64 @@
 ---
 name: review-implementation
-description: Review implementation against its purpose and user experience, fix root causes, and refine it through repeated simplification passes. Use when verifying correctness and side effects, reviewing user-facing or developer-facing interfaces, redesigning flawed foundations, managing legacy compatibility, removing speculative abstractions or defensive code, or applying fixes.
+description: Review an implementation against its requirements and user workflow; apply fixes when requested. Use for implementation audits or specification conformance reviews.
 ---
 
 # Review Implementation
 
-Review from evidence. Protect the purpose first, then simplify repeatedly.
+Establish whether the implementation achieves its intended purpose and identify
+concrete problems in behavior, contracts, or structure.
 
-## Philosophy
+## Choose the requested mode
 
-Follow the Unix and X11 philosophies:
+For a review, audit, or assessment, inspect and report without editing code or
+marking requirements complete. When fixes or improvements are requested, apply
+them within the agreed purpose. Existing authorization carries through the work;
+the skill does not add a separate approval step.
 
-- Make each part do one thing well.
-- Prefer small, composable mechanisms; keep policy and side effects at explicit boundaries.
-- Treat every interface as a user experience, whether its user is a customer, developer, operator, or another system. Optimize for their outcome, predictability, and cost of use, not implementation convenience or feature count.
-- Choose the simplest coherent system that fully achieves the purpose, not the smallest diff. Effort or change size is not a reason to preserve a wrong foundation.
-- Fix root causes instead of adding compensating branches, wrappers, flags, or special cases around them.
-- Do not design for an imagined future. Add abstraction only when a present need or real duplication justifies it.
-- Defend real boundaries and failures, not every conceivable case. At trusted internal boundaries, prefer an immediate, visible failure to fallback, retry, catch-and-continue, or invalid state. At a user boundary, make the failure specific and actionable.
-- Preserve legacy behavior only when actual users, data, or public contracts justify it. Isolate compatibility at a boundary, provide a migration path, and make its removal explicit; do not distort the core design or maintain parallel paths indefinitely.
-- Treat easy deletion as the strongest test of good modularity. A feature or module should be removable with few unrelated changes.
-- Write code, comments, and documents plainly. State each idea once; remove ceremony, repetition, and decorative language.
+## Ground the review
 
-Simplicity is not fewer lines at the expense of correctness. Keep everything required by the goal and nothing else.
+Use supplied requirements, PRDs, acceptance criteria, and relevant project
+guidance. Trace affected callers, interfaces, data flow, and tests far enough to
+judge the user's complete workflow. Distinguish documented requirements from
+assumptions and accidental legacy behavior.
 
-## Review Cycle
+For material findings, connect the expected outcome to code evidence and a
+specific failure or maintenance cost. Check cross-boundary effects such as stale
+async results, duplicated work, data loss, or incompatible contracts when the
+changed behavior exposes those risks. Avoid a universal checklist of unrelated
+security, performance, or cleanup work.
 
-Work in this order. Do not collapse all concerns into one pass.
+Treat each interface as a user experience, including APIs, CLIs, functions, and
+operator tools. Evaluate whether it is predictable and supports its user's task.
 
-### 1. Purpose and correctness
+## Improve when authorized
 
-- Verify that the implementation achieves the intended goal and requirements.
-- Trace the relevant interface, callers, data flow, and user workflow before changing it. Judge the result from the user's path, not only the local code.
-- Find incorrect, missing, or conflicting behavior.
-- Trace material problems to their root cause. Decide whether a local fix is sound or the model, ownership, boundary, or flow must change.
-- Separate intended contracts from accidental legacy behavior. Treat prescribed designs as revisable when they conflict with the purpose or evidence.
-- Redesign freely within the authorized purpose. Surface material changes to product intent, public contracts, data, or rollout before acting.
-- Check relevant edge cases, integration boundaries, and potential security, data, performance, or operational problems.
-- Look for unintended behavior and side effects outside the changed scope.
-- Validate the user-observable outcome and important contracts with the smallest sufficient checks.
+Fix the root cause with the simplest coherent design. A larger structural change
+is justified when the evidence shows a smaller patch would preserve the fault;
+review alone does not authorize that change. If the fix requires a product,
+public-contract, data, or rollout decision outside the request, present that
+decision and continue independent work within the agreed scope.
 
-### 2. Refine in focused passes
+Prefer small, composable mechanisms, explicit interfaces, and policy and side
+effects at boundaries. Remove unnecessary layers, duplication, state, or options
+when doing so resolves a demonstrated problem in the reviewed scope. Do not
+discard behavior merely because its consumer is not visible in the local diff.
 
-Run several small passes:
+Keep compatibility and recovery that known users, data, or contracts require.
+Isolate temporary compatibility and define when it can be retired. Let invalid
+internal state fail visibly; make failures at user-facing boundaries actionable.
 
-1. **Repair the foundation:** replace a flawed model, boundary, ownership split, or flow instead of patching around it, even when the coherent change is larger.
-2. **Subtract scope:** remove behavior, options, dependencies, temporary work, and future-facing paths not required by the purpose.
-3. **Collapse structure:** remove needless layers, indirection, state, abstractions, wrappers, and defensive branches. Prefer direct failure when recovery has no requirement or user value.
-4. **Isolate legacy:** keep justified compatibility in a removable adapter or migration, with one target model and a clear retirement condition.
-5. **Clarify use:** keep interfaces small, explicit, consistent, and hard to misuse. Use intention-revealing names and clear errors; make docs and tests useful as examples. Remove duplication, restatement, and ornamental prose.
+Use the smallest sufficient checks for the changed behavior and its contracts,
+subject to project execution rules. Recheck after a relevant change, failure, or
+unresolved concern. Finish when the authorized findings are addressed and the
+evidence is sufficient; additional simplification is not an open-ended goal.
 
-After each pass, preserve intended behavior with proportionate checks. Then repeat the purpose review and refinement passes until a full pass finds no meaningful problem or simplification. Do not stop after the first acceptable result.
+Update requested PRD status or checkboxes only when the work and evidence support
+them. Record deferred requirements and validation gaps explicitly.
 
-## Act and Report
+## Report
 
-- When asked only to review, report findings in severity order with concrete evidence and validation gaps.
-- When asked to improve or fix, implement the simplest coherent end state, not the smallest patch. Make the broader change when the root cause requires it; leave a workaround only when explicitly temporary, with a removal condition. Validate the final result and report remaining risk.
-- State clearly when no material issue is found.
+For review-only work, lead with actionable findings in severity order, each with
+file/line evidence, the affected scenario, and its consequence. For fix work,
+lead with the changes and the validation performed. State when no material issue
+was found, and distinguish code inspection from checks actually run.

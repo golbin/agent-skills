@@ -1,79 +1,59 @@
 ---
 name: review
-description: Review software designs and implementations for user experience, simplicity, and maintainability; apply changes when requested. Use for design critiques, implementation audits, or specification conformance reviews.
+description: Review software designs and implementations for user experience, simplicity, and maintainability; apply fixes when requested.
 ---
 
 # Review
 
-Judge designs and implementations by the experience they deliver to their users.
-Among solutions that meet the user's needs and required contracts, simplicity is
-the most important design criterion.
+Put user experience first. Choose the simplest solution that meets the need while
+preserving correctness, security, user data, and required contracts.
 
-## Choose the requested mode
+## Scope
 
-For a review, audit, or assessment, inspect and report without editing design
-documents, code, or requirement status. When fixes or improvements are requested,
-apply them within the agreed purpose. Existing authorization carries through the
-work; the skill does not add a separate approval step.
+Review-only requests authorize inspection and findings, without edits to code,
+design documents, or requirement status. Apply requested fixes within the agreed
+scope; existing authorization does not need a separate approval step.
 
-## Start with the user experience
+## Evaluate
 
-Identify who uses the result and what they need to accomplish. End users,
-API consumers, developers maintaining server logic, and operators all count.
-Evaluate whether their workflow is understandable, predictable, and recoverable,
-including setup, normal use, failures, and later changes where relevant.
-Correctness, security, data integrity, and required compatibility are part of
-that experience; do not sacrifice them to reduce code or steps.
+Identify users and their tasks, including API consumers, maintaining developers,
+and operators. Assess whether workflows are understandable, predictable, and
+recoverable in normal use, failure, and later maintenance.
 
-Use supplied requirements, PRDs, acceptance criteria, and project guidance. For
-a design, trace proposed interactions, ownership, contracts, and data flow through
-concrete scenarios; identify assumptions that need evidence. For an
-implementation, trace affected callers, interfaces, and tests far enough to judge
-the complete workflow. Distinguish intended requirements from accidental legacy
-behavior. A design review does not require code to exist.
+Use relevant requirements and project guidance. Walk designs through concrete
+scenarios, ownership, contracts, and data flow. For implementations, trace callers,
+interfaces, and tests across the affected workflow. Distinguish assumptions and
+accidental legacy behavior from intended requirements. Investigate risks such as
+stale results, duplicates, or data loss when the reviewed behavior exposes them.
 
-Connect material findings to evidence and a specific user consequence or
-maintenance cost. Check cross-boundary risks such as stale async results,
-duplicated work, data loss, or incompatible contracts when the reviewed behavior
-exposes them. Avoid a universal checklist of unrelated concerns.
+Follow Unix philosophy: focused parts composed through explicit interfaces, with
+policy separated from mechanism and side effects at boundaries. Minimize concepts,
+dependencies, state, and indirection; avoid speculative abstractions.
 
-## Prefer simplicity and easy removal
+Test modularity by asking whether a component can be removed with few unrelated
+changes. Local ownership and limited coupling make deletion, replacement,
+extension, and maintenance easier. Do not add machinery just for removability.
 
-Follow the Unix philosophy: give each part one focused job and compose small
-mechanisms through explicit interfaces. Separate policy from mechanism and keep
-side effects at boundaries when this clarifies ownership. Choose the fewest
-concepts, dependencies, states, and indirections that solve the actual problem;
-composition does not require extra services, frameworks, or abstractions.
+## Fix and verify
 
-Use deletability as a test of modularity: can a feature or component be removed
-with few unrelated changes? Clear ownership and limited coupling make removal,
-replacement, extension, and maintenance easier. Prefer modules whose lifecycle
-is local over speculative extension points or shared state that spreads a change
-through the system. Do not add machinery merely to demonstrate removability.
+When authorized, fix root causes. Restructure when a smaller patch would preserve
+the fault; remove unnecessary layers or duplication within scope. A consumer's
+absence from the local diff is not evidence that behavior is unused. Preserve
+required compatibility and recovery; give temporary mechanisms a retirement
+condition.
 
-## Improve when authorized
+Raise product, contract, data, or rollout decisions outside the request while
+continuing independent work within scope.
 
-Fix the root cause with the simplest coherent design. A larger structural change
-is justified when a smaller patch would preserve the fault. Remove unnecessary
-layers, duplication, state, or options when this resolves a demonstrated problem
-within scope. Do not discard behavior merely because its consumer is absent from
-the local diff. Preserve compatibility and recovery required by known users,
-data, or contracts; isolate temporary compatibility and define its retirement.
-
-If a fix requires a product, public-contract, data, or rollout decision outside
-the request, present that decision and continue independent work within scope.
-
-Use the smallest sufficient checks for the changed behavior and its contracts,
-subject to project execution rules. For designs, use scenario walkthroughs and
-contract checks; distinguish proposed validation from checks actually run.
-Recheck after a relevant change, failure, or unresolved concern. Finish when the
-authorized findings are addressed and the evidence is sufficient; simplification
-is not an open-ended goal. Update requested requirement status only when the
-work and evidence support it, and record deferred work or validation gaps.
+Use the smallest sufficient checks allowed by project rules, including scenario
+walkthroughs for designs. Recheck only after a relevant change, failure, or
+unresolved concern. Finish when authorized findings are addressed and evidence is
+sufficient. Update requested requirement status only with supporting evidence.
 
 ## Report
 
-For review-only work, lead with actionable findings in severity order, each with
-a design section or file/line reference, the affected scenario, and its
-consequence. For fix work, lead with changes and validation performed. State when
-no material issue was found and distinguish inspection from execution evidence.
+For reviews, lead with actionable findings in severity order: location (design
+section or file/line), evidence, affected scenario, and user or maintenance impact.
+State when no material issue was found. For fixes, lead with changes and validation.
+Distinguish inspection, checks actually run, and proposed checks; record deferred
+work and validation gaps.

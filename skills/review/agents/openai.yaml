@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review"
+  short_description: "Review design and code for UX and simplicity"
+  default_prompt: "Use $review to assess this software design or implementation for user experience, simplicity, and maintainability, and report actionable findings."
